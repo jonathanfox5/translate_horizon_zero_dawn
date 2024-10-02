@@ -1,0 +1,17 @@
+cached-property==1.5.2
+chevron==0.14.0
+et-xmlfile==1.1.0
+ffmpeg==1.4
+frozendict==2.4.4
+genanki==0.13.1
+invoke==2.2.0
+numpy==2.1.1
+openpyxl==3.1.5
+pandas==2.2.3
+pydecima==1.0.1
+pydub==0.25.1
+python-dateutil==2.9.0.post0
+pytz==2024.2
+PyYAML==6.0.2
+six==1.16.0
+tzdata==2024.2

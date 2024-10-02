@@ -1,0 +1,11 @@
+[
+    {"name": "index"},
+    {"name": "word"},
+    {"name": "speaker"},
+    {"name": "sentence"},
+    {"name": "translation"},
+    {"name": "sentence_audio"},
+    {"name": "word_audio"},
+    {"name": "definition"},
+    {"name": "frequency"}
+]
