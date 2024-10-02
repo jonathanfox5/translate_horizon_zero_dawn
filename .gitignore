@@ -166,7 +166,7 @@ cython_debug/
 output/*
 !output/.ignore
 !output/audio/.ignore
-unpacked_files/
+unpacked_files/*
 !unpacked_files/.ignore
 
 #  oo2coore-3_win64.dll is copyrighted, need to copy from the user's directory instead of uploading to git
