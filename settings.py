@@ -29,7 +29,6 @@ ANKI_MAX_CARDS = 1000
 
 DICTIONARY_PATH = r"C:\Users\jonat\Dictionaries\Migaku\Vicon_Ita_to_Eng_Dictionary.json"
 WORD_AUDIO_PATH = r"C:\Users\jonat\Dictionaries"
-GENERAL_1000_WORDS_PATH = r"reference\top1000_words.xlsx"
 
 ANKI_EXCLUDE = [
     "nora",
@@ -40,6 +39,7 @@ ANKI_EXCLUDE = [
     "gaia",
     "ban-ur",
     "elisabet",
+    "elisabeth"
     "dervahl",
     "rost",
     "olin",
@@ -62,7 +62,6 @@ ANKI_EXCLUDE = [
 
 """
 You shouldn't need to change the following unless you are making changes to the script
-Unpacked root is wherever you extracted the localization/sentences files using the DecimaExplorer-GUI.exe tool. If following the readme, this is "unpacked_files".
 """
 UNPACKED_ROOT = r"unpacked_files"
 OUTPUT_FOLDER = r"output"
@@ -72,6 +71,7 @@ SENTENCE_DUMPER_PATH = r"tools\decima-scripts\sentence_dumper"
 DECIMA_EXPLORER_PATH = r"tools\decimaexplorer\DecimaExplorer-GUI.exe"
 DECIMA_EXPLORER_CLI = r"tools\decimaexplorer\DecimaExplorer.exe"
 ANKI_TEMPLATE_DIRECTORY = r"html_source\anki"
+GENERAL_1000_WORDS_PATH = r"reference\top1000_words.xlsx"
 DECIMA_VERSION = "HZDPC"
 
 """
