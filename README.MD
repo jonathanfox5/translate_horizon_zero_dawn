@@ -24,7 +24,7 @@ The transcript can also be loaded onto an eReader, with or without translations:
 
 # Youtube Tutorial
 
-Youtube tutorial for getting it working. Alternatively, see the text instructions further down this readme.
+Click on the image below to view a step-by-step Youtube tutorial. Alternatively, scroll further down this readme for a written guide.
 
 [![Youtube Tutorial](https://img.youtube.com/vi/U3NizCgQ2y0/maxresdefault.jpg)](https://www.youtube.com/watch?v=U3NizCgQ2y0)
 
