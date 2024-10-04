@@ -66,7 +66,7 @@ def main() -> None:
     ]
     run_py_script(command)
 
-    print("Done! You can now close this window.")
+    print("Done! You can now move on to the next command.")
 
 
 if __name__ == "__main__":

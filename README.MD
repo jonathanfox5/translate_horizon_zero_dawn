@@ -26,7 +26,7 @@ The transcript can also be loaded onto an eReader, with or without translations:
 
 Youtube tutorial for getting it working. Alternatively, see the text instructions further down this readme.
 
-[![Youtube Tutorial](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+[![Youtube Tutorial](https://img.youtube.com/vi/U3NizCgQ2y0E/0.jpg)](https://www.youtube.com/watch?v=U3NizCgQ2y0)
 
 # Installation Steps
 
@@ -68,8 +68,8 @@ Update the following settings and then save and close the file once you have mad
 The following settings only need to be set if you are planning on running the script to create the anki deck. If you aren't, feel free to ignore them!
 
 1. `ANKI_MAX_CARDS` is the size of the Anki deck. I don't recommend that you go above 1000, otherwise it can take quite long to run the script.
-2. `DICTIONARY_PATH` is the path of the dictionary file in json format from which the definition will be looked up. The [Vocabsieve Manual](https://docs.freelanguagetools.org/resources.html) is a good starting point for json dictionaries. I like the Vicon dictionary for Italian as it automatically lemmatises the words. Wikitionary is a good choice too.
-3. `WORD_AUDIO_PATH` is the path where the mp3 audio is for each individual word. The [Vocabsieve Manual](https://docs.freelanguagetools.org/resources.html) is a good starting point for word mp3 files. I use both the Forvo and the Lingua Libre files in Italian.
+2. `DICTIONARY_PATH` is the path of the dictionary file in json format from which the definition will be looked up. The [Vocabsieve Manual](https://docs.freelanguagetools.org/resources.html) is a good starting point for json dictionaries. I like the Vicon dictionary for Italian as it automatically lemmatises the words. Wiktionary is a good choice too.
+3. `WORD_AUDIO_PATH` is the path where the mp3 audio is for each individual word. The [Vocabsieve Manual](https://docs.freelanguagetools.org/resources.html) is a good starting point for word mp3 files. I use the Lingua Libre files in Italian.
 4. `GENERAL_1000_WORDS_PATH` is the file that holds the top 1000 words for your target language. You don't need to update this path if you are following this readme line by line as we will update this file later on.
 
 ## Extract Game Files
@@ -143,7 +143,7 @@ Before running the script, you will need to update the frequency list for your l
 1. The words must be pasted into column B of the spreadsheet, the other columns can be whatever you like.
 2. The column headers (i.e. the names in row 1) must not be changed, even if you have zero entries.
 
-[Wikitionary](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists) is a good source for frequency lists. I used [this one](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Italian1000) for Italian.
+[Wiktionary](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists) is a good source for frequency lists. I used [this one](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Italian1000) for Italian.
 
 Once you have pasted in your words and made sure that row 1 hasn't been changed, run the following command:
 
@@ -168,5 +168,5 @@ Several external tools are bundled within the `tools` directory. You can see the
 - [Jayveer's Decima-Explorer](https://github.com/Jayveer/Decima-Explorer), used to extract the game files.
 - [Bearborg's decima-scripts](https://github.com/Bearborg/decima-scripts), used to pull out the `.at9` sound files on a per language basis.
 - [Thealexbarney's VGAudio](https://github.com/Thealexbarney/VGAudio), used to convert the `.at9` files into a format that can be further manipulated by FFMPEG.
-- An example [Wikitionary frequency list](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists) is in the repository with additions to the end of the file, licenced under [Creative Commons](https://creativecommons.org/licenses/by-sa/4.0/).
+- An example [Wiktionary frequency list](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists) is in the repository with additions to the end of the file, licenced under [Creative Commons](https://creativecommons.org/licenses/by-sa/4.0/).
 - The format of the Anki cards is based upon the excellent [Refold 1k decks](https://refold.la/category/decks).
