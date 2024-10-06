@@ -63,3 +63,35 @@ def file_exists(file_path: str) -> bool:
 
 def get_script_dir() -> str:
     return os.path.dirname(os.path.abspath(__file__))
+
+
+def decima_lang_to_simplemma(decima_lang: str) -> str:
+    """Only covers european languages to match lemmatizer"""
+
+    lookup = {
+        "English": "en",
+        "French": "fr",
+        "Spanish": "es",
+        "German": "de",
+        "Italian": "it",
+        "Dutch": "nl",
+        "Portuguese": "pt",
+        "TraditionalChinese": "",
+        "Korean": "",
+        "Russian": "ru",
+        "Polish": "pl",
+        "Danish": "da",
+        "Finnish": "fi",
+        "Norwegian": "nb",
+        "Swedish": "sv",
+        "Japanese": "",
+        "LatinAmericanSpanish": "es",
+        "BrazilianPortuguese": "pt",
+        "Turkish": "",
+        "Arabic": "tr",
+        "SimplifiedChinese": "",
+    }
+
+    output = lookup[decima_lang]
+
+    return output
