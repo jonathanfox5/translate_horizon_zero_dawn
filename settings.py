@@ -57,6 +57,7 @@ ANKI_EXCLUDE = [
     "focus",
     "uhm",
     "ehm",
+    "ourea",
 ]
 
 
