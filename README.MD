@@ -70,7 +70,7 @@ The following settings only need to be set if you are planning on running the sc
 1. `ANKI_MAX_CARDS` is the size of the Anki deck. I don't recommend that you go above 1000, otherwise it can take quite long to run the script.
 2. `DICTIONARY_PATH` is the path of the dictionary file in json format from which the definition will be looked up. The [Vocabsieve Manual](https://docs.freelanguagetools.org/resources.html) is a good starting point for json dictionaries. I like the Vicon dictionary for Italian as it automatically lemmatises the words. Wiktionary is a good choice too.
 3. `WORD_AUDIO_PATH` is the path where the mp3 audio is for each individual word. The [Vocabsieve Manual](https://docs.freelanguagetools.org/resources.html) is a good starting point for word mp3 files. I use the Lingua Libre files in Italian.
-4. `LEMMATIZE_WORDS` should be True or False. When enabled, tries to find the root word rather than the conjugated word. Does not affect words that aren't supported by simplemma. Will work great for some languages, less so for others. Therefore, it has been set to False by default.
+4. `LEMMATIZE_WORDS` should be True or False. When enabled, tries to find the root word rather than the conjugated word. Does not affect languages that aren't supported by [simplemma](https://pypi.org/project/simplemma/). Will work great for some languages, less so for others. Therefore, it has been set to False by default.
 5. `ANKI_EXCLUDE` can be used to exclude certain words from the Anki deck. By default, this has been set to proper nouns such as Aloy, Nora, etc.
 
 ## Extract Game Files
