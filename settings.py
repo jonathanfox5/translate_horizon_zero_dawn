@@ -23,12 +23,15 @@ These only need to be set if you want to generate Anki decks
 ANKI_MAX_CARDS is the number of cards in the Anki deck. I recommend that you don't go above around 1000, otherwise the script will take a while to run.
 Dictionary path is the location of the json dictionary for your language and is used for working out the definition to put on the Anki card
 Work audio path is used to read out the word on the front of the card
+LEMMATIZE_WORDS should be True or False. Does not affect words that aren't supported by simplemma. Will work great for some languages, less so for others. Therefore, it has been set to False by default
 Anki exclude is a list of specific words that you don't want added to the Anki deck. By default, I've set these to be the proper names within the world e.g. Aloy, Nora, etc. Note that these might be different in languages that aren't Italian!
 """
 ANKI_MAX_CARDS = 1000
 
 DICTIONARY_PATH = r"C:\Users\jonat\Dictionaries\Migaku\Vicon_Ita_to_Eng_Dictionary.json"
 WORD_AUDIO_PATH = r"C:\Users\jonat\Dictionaries"
+
+LEMMATIZE_WORDS = False
 
 ANKI_EXCLUDE = [
     "nora",
@@ -39,7 +42,7 @@ ANKI_EXCLUDE = [
     "gaia",
     "ban-ur",
     "elisabet",
-    "elisabeth"
+    "elisabeth",
     "dervahl",
     "rost",
     "olin",
@@ -59,7 +62,6 @@ ANKI_EXCLUDE = [
     "ehm",
     "ourea",
 ]
-
 
 """
 You shouldn't need to change the following unless you are making changes to the script

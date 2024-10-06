@@ -12,8 +12,11 @@ import re
 
 import pandas as pd
 import genanki
+from tools.vocabsieve.lemmatizer import lemmatize
 
 import settings
+
+from support import decima_lang_to_simplemma
 
 
 def main() -> None:
@@ -27,22 +30,26 @@ def main() -> None:
     df_freq = frequency_analysis(
         df_input=df_input,
         target_language_name=settings.TARGET_LANG.name,
+        target_language_abbreviation=decima_lang_to_simplemma(
+            settings.TARGET_LANG.name
+        ),
         wiki_freq_spreadsheet_path=settings.GENERAL_1000_WORDS_PATH,
         output_directory=settings.OUTPUT_FOLDER,
         game_name=settings.DECIMA_VERSION,
         exclude_list=settings.ANKI_EXCLUDE,
         max_cards=settings.ANKI_MAX_CARDS,
+        lemmatize_words=settings.LEMMATIZE_WORDS,
     )
 
-    build_anki_deck(
-        df=df_freq,
-        target_language_name=settings.TARGET_LANG.name,
-        template_directory=settings.ANKI_TEMPLATE_DIRECTORY,
-        output_directory=settings.OUTPUT_FOLDER,
-        game_name=settings.DECIMA_VERSION,
-        dictionary_path=settings.DICTIONARY_PATH,
-        word_audio_root=settings.WORD_AUDIO_PATH,
-    )
+    # build_anki_deck(
+    #     df=df_freq,
+    #     target_language_name=settings.TARGET_LANG.name,
+    #     template_directory=settings.ANKI_TEMPLATE_DIRECTORY,
+    #     output_directory=settings.OUTPUT_FOLDER,
+    #     game_name=settings.DECIMA_VERSION,
+    #     dictionary_path=settings.DICTIONARY_PATH,
+    #     word_audio_root=settings.WORD_AUDIO_PATH,
+    # )
 
     print("Done! You can now close this window.")
 
@@ -174,14 +181,16 @@ def build_anki_deck(
 def frequency_analysis(
     df_input: pd.DataFrame,
     target_language_name: str,
+    target_language_abbreviation: str,
     wiki_freq_spreadsheet_path: str,
     output_directory: str,
     game_name: str,
     exclude_list: list,
     max_cards: int,
+    lemmatize_words: bool,
 ) -> pd.DataFrame:
 
-    print("Frequency analysis: Counting words (may take a while)")
+    print("Frequency analysis: Collating words (may take a while)")
 
     all_text = ""
     for index, row in df_input.iterrows():
@@ -191,21 +200,46 @@ def frequency_analysis(
 
     all_text_split = all_text.split()
 
-    word_dict = {}
+    print("Frequency analysis: Counting words (may take a while)")
+
+    df_freq_table = pd.DataFrame(columns=["word", "example", "frequency"])
+    i=0
+    total_size = len(all_text_split)
     for word in all_text_split:
+
         word = remove_punctuation(word)
-        if word in word_dict.keys():
-            word_dict[word] += 1
+        lemma = lemmatize(word, target_language_abbreviation, greedy=False)
+
+        # Word key is the one that will be processed in the frequency list
+        # Word example is the one that we will look up in the game files
+        # If we are lemmatising, set the word key to the lemma
+        word_key = word
+        word_example = word
+
+        if lemmatize_words:
+            word_key = lemma
+        
+        if word_key in df_freq_table["word"].values:
+            df_freq_table.loc[df_freq_table["word"] == word_key, "frequency"] += 1
         else:
-            word_dict[word] = 1
+            new_row = pd.DataFrame([{"word": word_key, "example": word_example, "frequency": 1}])
+            df_freq_table = pd.concat([df_freq_table, new_row], ignore_index=True)
+        
+        i+=1
+        if i % 1000 == 0:
+            print(f"Frequency analysis counting words, i={i}, {100*(i/total_size)}%")
+
+        
 
     print("Frequency analysis: Pruning words")
-    df_freq_table = pd.DataFrame(list(word_dict.items()), columns=["word", "frequency"])
     df_freq_table = df_freq_table.sort_values(by=["frequency"], ascending=False)
 
-    # Remove lines that are either the in top 1000 of the general language or have been set as excluded (e.g. proper nouns)
+    # Remove lines that are either the in top 1000 of the general language (including lemmatisations) or have been set as excluded (e.g. proper nouns)
     df_wiki_freq = pd.read_excel(wiki_freq_spreadsheet_path)
     df_freq_table = df_freq_table[~df_freq_table["word"].isin(df_wiki_freq["word"])]
+    df_freq_table = df_freq_table[
+        ~df_freq_table["word"].isin(df_wiki_freq["lemma forms"])
+    ]
     df_freq_table = df_freq_table[~df_freq_table["word"].isin(exclude_list)]
 
     # Update to only process the top x from the game and add extra columns
@@ -230,7 +264,7 @@ def frequency_analysis(
     for index, row in df_freq_table.iterrows():
 
         line = df_input[
-            df_input["target_language"].apply(lambda x: full_word_match(x, row["word"]))
+            df_input["target_language"].apply(lambda x: full_word_match(x, row["example"]))
         ].head(1)
 
         df_freq_table.at[index, "category"] = line["category"].values
