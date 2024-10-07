@@ -41,15 +41,15 @@ def main() -> None:
         lemmatize_words=settings.LEMMATIZE_WORDS,
     )
 
-    # build_anki_deck(
-    #     df=df_freq,
-    #     target_language_name=settings.TARGET_LANG.name,
-    #     template_directory=settings.ANKI_TEMPLATE_DIRECTORY,
-    #     output_directory=settings.OUTPUT_FOLDER,
-    #     game_name=settings.DECIMA_VERSION,
-    #     dictionary_path=settings.DICTIONARY_PATH,
-    #     word_audio_root=settings.WORD_AUDIO_PATH,
-    # )
+    build_anki_deck(
+        df=df_freq,
+        target_language_name=settings.TARGET_LANG.name,
+        template_directory=settings.ANKI_TEMPLATE_DIRECTORY,
+        output_directory=settings.OUTPUT_FOLDER,
+        game_name=settings.DECIMA_VERSION,
+        dictionary_path=settings.DICTIONARY_PATH,
+        word_audio_root=settings.WORD_AUDIO_PATH,
+    )
 
     print("Done! You can now close this window.")
 
