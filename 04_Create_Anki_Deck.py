@@ -4,7 +4,6 @@ Settings can be modified in settings.py
 """
 
 import os
-from pprint import pprint
 import html
 import random
 import json
@@ -12,10 +11,9 @@ import re
 
 import pandas as pd
 import genanki
-from tools.vocabsieve.lemmatizer import lemmatize
 
 import settings
-
+from tools.lemon_tizer.lemon_tizer import LemonTizer
 from support import decima_lang_to_simplemma
 
 
@@ -103,7 +101,7 @@ def build_anki_deck(
     i = 0
     note_cards = []
     media_files = []
-    for index, row in df.iterrows():
+    for _, row in df.iterrows():
         # Get data from row
         word = str(row["word"]).lower()
         line = str(row["line"])
@@ -190,46 +188,49 @@ def frequency_analysis(
     lemmatize_words: bool,
 ) -> pd.DataFrame:
 
-    print("Frequency analysis: Collating words (may take a while)")
-
-    all_text = ""
-    for index, row in df_input.iterrows():
-        line = row["target_language"]
-        line = line.strip()
-        all_text = all_text + line + " "
-
-    all_text_split = all_text.split()
+    print("Frequency analysis: loading language model")
+    lemma = LemonTizer(language=target_language_abbreviation, model_size="lg")
+    lemma.set_lemma_settings(filter_out_non_alpha=True,
+            filter_out_common=True,
+            convert_input_to_lower=True,
+            convert_output_to_lower=True,
+            return_just_first_word_of_lemma=True)
 
     print("Frequency analysis: Counting words (may take a while)")
 
     df_freq_table = pd.DataFrame(columns=["word", "example", "frequency"])
-    i=0
-    total_size = len(all_text_split)
-    for word in all_text_split:
+    total_size = len(df_input)
+    i = 0
+    for index, row in df_input.iterrows():
+        line = row["target_language"]
 
-        word = remove_punctuation(word)
-        lemma = lemmatize(word, target_language_abbreviation, greedy=False)
+        word_list = lemma.lemmatize_sentence(input_str=line)
 
-        # Word key is the one that will be processed in the frequency list
-        # Word example is the one that we will look up in the game files
-        # If we are lemmatising, set the word key to the lemma
-        word_key = word
-        word_example = word
+        for word_dict in word_list:
+            for word, word_lemma in word_dict.items():
 
-        if lemmatize_words:
-            word_key = lemma
-        
-        if word_key in df_freq_table["word"].values:
-            df_freq_table.loc[df_freq_table["word"] == word_key, "frequency"] += 1
-        else:
-            new_row = pd.DataFrame([{"word": word_key, "example": word_example, "frequency": 1}])
-            df_freq_table = pd.concat([df_freq_table, new_row], ignore_index=True)
-        
-        i+=1
+                # Word key is the one that will be processed in the frequency list
+                # Word example is the one that we will look up in the game files
+                # If we are lemmatising, set the word key to the lemma
+                word_key = word
+                word_example = word
+
+                if lemmatize_words:
+                    word_key = word_lemma
+
+                if word_key in df_freq_table["word"].values:
+                    df_freq_table.loc[df_freq_table["word"] == word_key, "frequency"] += 1
+                else:
+                    new_row = pd.DataFrame(
+                        [{"word": word_key, "example": word_example, "frequency": 1}]
+                    )
+                    df_freq_table = pd.concat([df_freq_table, new_row], ignore_index=True)
+
+        i += 1
         if i % 1000 == 0:
-            print(f"Frequency analysis counting words, i={i}, {100*(i/total_size)}%")
-
-        
+            print(
+                f"Frequency analysis counting words, i={i}, {(100*(i/total_size)):.2f}%"
+            )
 
     print("Frequency analysis: Pruning words")
     df_freq_table = df_freq_table.sort_values(by=["frequency"], ascending=False)
@@ -245,6 +246,7 @@ def frequency_analysis(
     # Update to only process the top x from the game and add extra columns
     df_freq_table = df_freq_table.head(max_cards)
 
+    # TODO: This search is no longer necessary, merge into previous bit of code
     print(
         "Frequency analysis: Getting example sentences from the game (may take a while)"
     )
@@ -264,7 +266,9 @@ def frequency_analysis(
     for index, row in df_freq_table.iterrows():
 
         line = df_input[
-            df_input["target_language"].apply(lambda x: full_word_match(x, row["example"]))
+            df_input["target_language"].apply(
+                lambda x: full_word_match(x, row["example"])
+            )
         ].head(1)
 
         df_freq_table.at[index, "category"] = line["category"].values
@@ -348,7 +352,7 @@ def create_model(
     return model
 
 
-def create_deck(deck_id: int, deck_name: str, note_cards: list = []) -> genanki.Deck:
+def create_deck(deck_id: int, deck_name: str, note_cards: list) -> genanki.Deck:
     deck = genanki.Deck(deck_id=deck_id, name=deck_name)
 
     if len(note_cards) > 0:
@@ -358,7 +362,7 @@ def create_deck(deck_id: int, deck_name: str, note_cards: list = []) -> genanki.
     return deck
 
 
-def create_package(deck: genanki.Deck, media_files: list = []) -> None:
+def create_package(deck: genanki.Deck, media_files: list) -> None:
     package = genanki.Package(deck)
 
     if len(media_files) > 0:
@@ -388,21 +392,21 @@ def generate_anki_id() -> int:
 def read_file_to_string(file_path: str) -> str:
     output = ""
 
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         output = file.read()
 
     return output
 
 
 def find_file(directory: str, filename: str) -> str:
-    for root, dirs, files in os.walk(directory):
+    for root, _, files in os.walk(directory):
         if filename in files:
             return os.path.join(root, filename)
     return None
 
 
 def load_json(file_path: str) -> list:
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         data = json.load(file)
 
     return data
