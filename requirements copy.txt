@@ -11,16 +11,17 @@ confection==0.1.5
 cymem==2.0.8
 et-xmlfile==1.1.0
 ffmpeg==1.4
-frozendict==2.4.5
+frozendict==2.4.4
 genanki==0.13.1
 idna==3.10
+invoke==2.2.0
+it_core_news_lg @ https://github.com/explosion/spacy-models/releases/download/it_core_news_lg-3.8.0/it_core_news_lg-3.8.0-py3-none-any.whl#sha256=b78582d0b2d05fd6509995f68ab7452efed7a27c6fbc5a071e9a9787a58c1e87
 Jinja2==3.1.4
 langcodes==3.4.1
 language_data==1.2.0
-lemon_tizer==0.0.4
 marisa-trie==1.2.0
 markdown-it-py==3.0.0
-MarkupSafe==3.0.1
+MarkupSafe==3.0.0
 mdurl==0.1.2
 murmurhash==1.0.10
 numpy==2.0.2
