@@ -169,6 +169,6 @@ Several external tools are bundled within the `tools` directory. You can see the
 - [Jayveer's Decima-Explorer](https://github.com/Jayveer/Decima-Explorer), used to extract the game files.
 - [Bearborg's decima-scripts](https://github.com/Bearborg/decima-scripts), used to pull out the `.at9` sound files on a per language basis.
 - [Thealexbarney's VGAudio](https://github.com/Thealexbarney/VGAudio), used to convert the `.at9` files into a format that can be further manipulated by FFMPEG.
+- [Jonathanfox5's lemon_tizer](https://github.com/jonathanfox5/lemon_tizer), used to lemmatise words prior to running frequency analysis on them.
 - An example [Wiktionary frequency list](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists) is in the repository with additions to the end of the file, licenced under [Creative Commons](https://creativecommons.org/licenses/by-sa/4.0/).
-- A modified version of the lemmatising code from [freelanguagetool's vocabsieve](https://github.com/FreeLanguageTools/vocabsieve) can be optionally enabled in `settings.py`.
 - The format of the Anki cards is based upon the excellent [Refold 1k decks](https://refold.la/category/decks).
