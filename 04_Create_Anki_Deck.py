@@ -11,9 +11,9 @@ import re
 
 import pandas as pd
 import genanki
+from lemon_tizer import LemonTizer
 
 import settings
-from tools.lemon_tizer.lemon_tizer import LemonTizer
 from support import decima_lang_to_simplemma
 
 

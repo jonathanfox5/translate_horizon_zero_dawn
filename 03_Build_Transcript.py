@@ -3,13 +3,15 @@ This script is part of a group of scripts. Please see README.MD.
 Settings can be modified in settings.py
 """
 
+import os
+import re
+
 import pydecima
 from pydecima.resources import SentenceResource
 from pydecima.enums import ETextLanguages
-import os
+
 import pandas as pd
-import openpyxl
-import re
+
 from pydub import AudioSegment
 
 import settings
